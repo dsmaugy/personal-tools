@@ -29,11 +29,25 @@ def animation_print_2(text: str, hold_dur: int = 10, type_speed: float = 0.05):
 
     sys.stdout.write(text)
     print()
+
+def animation_print_3(text: str, hold_dur: int = 20, type_speed: float = 0.03):
+    for i in range(hold_dur):
+        for c in text:
+            sys.stdout.write(chr(randrange(33, 127)))
+            sys.stdout.flush()
+        sleep(type_speed)
+        sys.stdout.write("\b"*len(text))
+        sys.stdout.flush()
+        
+    print(text)
+
         
 
-print(colored("Smaugy", "light_blue") + ": ", end='')
-animation_print_2("what do you want to create?")
+
 
 print(colored("Bluecat", "light_red") + ": ", end='')
-sleep(0.5)
-animation_print_1("i'm not sure")
+animation_print_3("why does it feel different this time?")
+
+print(colored("Smaugy", "light_blue") + ": ", end='')
+animation_print_1("because he has learned to see it")
+

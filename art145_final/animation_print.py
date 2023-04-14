@@ -44,10 +44,11 @@ def animation_print_3(text: str, hold_dur: int = 20, type_speed: float = 0.03):
         
 
 
+if __name__ == "__main__":
+    print(colored("Bluecat", "light_red") + ": ", end='')
+    animation_print_3("why does it feel different this time?")
 
-print(colored("Bluecat", "light_red") + ": ", end='')
-animation_print_3("why does it feel different this time?")
+    print(colored("Smaugy", "light_blue") + ": ", end='')
+    animation_print_1("because he has learned to see it")
 
-print(colored("Smaugy", "light_blue") + ": ", end='')
-animation_print_1("because he has learned to see it")
-
+    animation_print_2("sound in you, waves in me")

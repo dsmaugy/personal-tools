@@ -1,6 +1,9 @@
 from print_utils import animation_print_1, animation_print_3, animation_print_2, permutate_string
 
 from time import sleep
+from typing import Callable
+from termcolor import colored
+
 
 IRC_WELCOME = """
                          __                                                      __               
@@ -76,6 +79,25 @@ Pì¸¡ˆÄ\ 3Å‰EðVWPEôd£
 èÝ }ðƒÆ;÷t‹…\ÿÿÿé(ÿÿÿh€!A jj…dÿÿÿÇEüÿÿÿÿPèýV hà­S è‚Z ƒÄ‹Môd‰
 """
 
+class Chatter():
+
+    max_name_width = 0
+
+    def __init__(self, name: str, color: str, chat_style: Callable, hold_dur=8, type_speed=0.01) -> None:
+        self._color = color
+        self._name = name
+        self._animation_print = chat_style
+        self._hold_dur = hold_dur
+        self._type_speed = type_speed
+
+        Chatter.max_name_width = max(len(self._name), Chatter.max_name_width)
+
+    def say(self, text: str, prompt=True):
+        print(colored(self._name, self._color, attrs=["bold", "underline"]) + " "*(Chatter.max_name_width - len(self._name)) + ": ", end="")
+        self._animation_print(text, newline=False, hold_dur=self._hold_dur, type_speed=self._type_speed)
+
+        if prompt:
+            input()
 
 def gateway_bootup():
     animation_print_1("", delay=2)
@@ -112,7 +134,12 @@ def gateway_bootup():
 
 
 if __name__ == "__main__":
-    gateway_bootup()
+    # gateway_bootup()
 
+    user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.1)
+    user_agarthus = Chatter("agarthus", "light_red", animation_print_1)
 
+    # user_smaugy.say("i tried beating a moonfish in a race")
+    # user_agarthus.say("is that so?")
+    user_agarthus.say("look, don't be the kid i aint with throw in the towel i know dont make me reload i marry my")
 

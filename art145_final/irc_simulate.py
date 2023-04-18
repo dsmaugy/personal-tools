@@ -3,6 +3,7 @@ from print_utils import animation_print_1, animation_print_3, animation_print_2,
 from time import sleep
 from typing import Callable
 from termcolor import colored
+from datetime import datetime
 
 
 IRC_WELCOME = """
@@ -79,6 +80,8 @@ Pì¸¡ˆÄ\ 3Å‰EðVWPEôd£
 èÝ }ðƒÆ;÷t‹…\ÿÿÿé(ÿÿÿh€!A jj…dÿÿÿÇEüÿÿÿÿPèýV hà­S è‚Z ƒÄ‹Môd‰
 """
 
+TIME_CONVERSION = "ᛯ�𝂙ᚡ𝂛�ᚸ𝂝ᛩ𝂞"
+
 class Chatter():
 
     max_name_width = 0
@@ -93,7 +96,16 @@ class Chatter():
         Chatter.max_name_width = max(len(self._name), Chatter.max_name_width)
 
     def say(self, text: str, prompt=True):
-        print(colored(self._name, self._color, attrs=["bold", "underline"]) + " "*(Chatter.max_name_width - len(self._name)) + ": ", end="")
+        current_ts = datetime.now().strftime("%H:%M:%S")
+        ts_string = "["
+        for c in current_ts:
+            if c.isdigit():
+                ts_string += TIME_CONVERSION[int(c)]
+            else:
+                ts_string += c
+        ts_string += "]" + " " *5
+
+        print(ts_string + " "*(Chatter.max_name_width - len(self._name)) + colored("<" + self._name + ">", self._color, attrs=["bold", "underline"]) + ": ", end="")
         self._animation_print(text, newline=False, hold_dur=self._hold_dur, type_speed=self._type_speed)
 
         if prompt:
@@ -131,7 +143,7 @@ def gateway_bootup():
 
     animation_print_3(IRC_WELCOME, newline=True)
     animation_print_1(IRC_MOTD, type_speed=0.0005, newline=True)
-
+    animation_print_1("-"*150, newline=True, delay=5)
 
 if __name__ == "__main__":
     # gateway_bootup()
@@ -139,7 +151,7 @@ if __name__ == "__main__":
     user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.1)
     user_agarthus = Chatter("agarthus", "light_red", animation_print_1)
 
-    # user_smaugy.say("i tried beating a moonfish in a race")
-    # user_agarthus.say("is that so?")
+    user_smaugy.say("i tried beating a moonfish in a race")
+    user_agarthus.say("is that so?")
     user_agarthus.say("look, don't be the kid i aint with throw in the towel i know dont make me reload i marry my")
 

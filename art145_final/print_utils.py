@@ -63,11 +63,6 @@ def animation_print_3(text: str, hold_dur: int = 20, type_speed: float = 0.03, n
     print(text, end=term)
     sleep(delay)
 
-def wait_print(text: str):
-    print(text)
-    input()
-
-
 def permutate_string(text: str) -> str:
     permutated_str = ""
     for _ in text:

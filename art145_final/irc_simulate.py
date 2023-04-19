@@ -1,9 +1,10 @@
 from print_utils import animation_print_1, animation_print_3, animation_print_2, permutate_string
 
 from time import sleep
-from typing import Callable
+from typing import Callable, List
 from termcolor import colored
 from datetime import datetime
+from random import choice
 
 
 IRC_WELCOME = """
@@ -80,7 +81,7 @@ Pì¸¡ˆÄ\ 3Å‰EðVWPEôd£
 èÝ }ðƒÆ;÷t‹…\ÿÿÿé(ÿÿÿh€!A jj…dÿÿÿÇEüÿÿÿÿPèýV hà­S è‚Z ƒÄ‹Môd‰
 """
 
-TIME_CONVERSION = "ᛯ�𝂙ᚡ𝂛�ᚸ𝂝ᛩ𝂞"
+TIME_CONVERSION = "ᛯ�␢ᚡ▓�ᚸ░ᛩ⚳"
 
 class Chatter():
 
@@ -92,10 +93,11 @@ class Chatter():
         self._animation_print = chat_style
         self._hold_dur = hold_dur
         self._type_speed = type_speed
+        self._bot = True if name == "*" else False
 
         Chatter.max_name_width = max(len(self._name), Chatter.max_name_width)
 
-    def say(self, text: str, prompt=True):
+    def say(self, text: str, newline=True, prompt=False, delay=0):
         current_ts = datetime.now().strftime("%H:%M:%S")
         ts_string = "["
         for c in current_ts:
@@ -103,13 +105,26 @@ class Chatter():
                 ts_string += TIME_CONVERSION[int(c)]
             else:
                 ts_string += c
-        ts_string += "]" + " " *5
+        ts_string += "]" + " "*5
 
-        print(ts_string + " "*(Chatter.max_name_width - len(self._name)) + colored("<" + self._name + ">", self._color, attrs=["bold", "underline"]) + ": ", end="")
-        self._animation_print(text, newline=False, hold_dur=self._hold_dur, type_speed=self._type_speed)
+        display_name = f"<{self._name}>" if not self._bot else f"  {self._name}"
+        display_attrs = ["bold", "underline"] if not self._bot else ["bold"]
+
+        print(ts_string + " "*(Chatter.max_name_width - len(self._name)) + colored(display_name, self._color, attrs=display_attrs) + ": ", end="")
+        self._animation_print(text, newline=newline, hold_dur=self._hold_dur, type_speed=self._type_speed, delay=delay)
 
         if prompt:
             input()
+
+class RandomChatter(Chatter):
+
+    def __init__(self, names: List[str], color: str, chat_style: Callable, hold_dur=8, type_speed=0.01) -> None:
+        self._random_names = names
+        super().__init__(names[0], color, chat_style, hold_dur, type_speed)
+
+    def say(self, text: str, newline=True, prompt=False, delay=0):
+        self._name = choice(self._random_names)
+        return super().say(text, newline, prompt, delay)
 
 def gateway_bootup():
     animation_print_1("", delay=2)
@@ -138,20 +153,24 @@ def gateway_bootup():
     animation_print_1("system bootup complete...", newline=True, delay=1.5)
     animation_print_1("starting gateway irc client...", newline=True, delay=1)
     animation_print_1("started!", newline=True, delay=0.2)
-    animation_print_1("connecting to [ffff:c0a8:0001:0:0:ffff:47e9:282e]:6667", newline=True, delay=2)
+    animation_print_1("connecting to [����:c0�8:0�01:0:�:ff�f:4��9:28�e]:6667", newline=True, delay=2)
     animation_print_1("connected!", newline=True, delay=1)
 
     animation_print_3(IRC_WELCOME, newline=True)
     animation_print_1(IRC_MOTD, type_speed=0.0005, newline=True)
-    animation_print_1("-"*150, newline=True, delay=5)
+    animation_print_1("-"*105, newline=True, delay=5)
 
 if __name__ == "__main__":
-    # gateway_bootup()
+    gateway_bootup()
 
     user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.1)
     user_agarthus = Chatter("agarthus", "light_red", animation_print_1)
+    user_system = Chatter("*", "light_cyan", animation_print_2, type_speed=0.008)
 
-    user_smaugy.say("i tried beating a moonfish in a race")
-    user_agarthus.say("is that so?")
-    user_agarthus.say("look, don't be the kid i aint with throw in the towel i know dont make me reload i marry my")
+    user_system.say("automatically joining channel #�����...")
+    user_system.say("joined channel #�����!")
+    user_system.say("�̶͑̊̓☐ users currently online", newline=False, prompt=True)
 
+
+    user_smaugy.say("given the chance...", delay=0.8)
+    user_smaugy.say("would you start again?")

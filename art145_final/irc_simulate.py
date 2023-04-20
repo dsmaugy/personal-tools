@@ -110,11 +110,13 @@ class Chatter():
         display_name = f"<{self._name}>" if not self._bot else f"  {self._name}"
         display_attrs = ["bold", "underline"] if not self._bot else ["bold"]
 
+        print_newline = newline and not prompt
+
         print(ts_string + " "*(Chatter.max_name_width - len(self._name)) + colored(display_name, self._color, attrs=display_attrs) + ": ", end="")
-        self._animation_print(text, newline=newline, hold_dur=self._hold_dur, type_speed=self._type_speed, delay=delay)
+        self._animation_print(text, newline=print_newline, hold_dur=self._hold_dur, type_speed=self._type_speed, delay=delay)
 
         if prompt:
-            input()
+            input("")
 
 class RandomChatter(Chatter):
 
@@ -163,8 +165,8 @@ def gateway_bootup():
 if __name__ == "__main__":
     gateway_bootup()
 
-    user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.1)
-    user_agarthus = Chatter("agarthus", "light_red", animation_print_1)
+    user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.09)
+    user_agarthus = Chatter("agarthus", "light_red", animation_print_3, 20, 0.05)
     user_system = Chatter("*", "light_cyan", animation_print_2, type_speed=0.008)
 
     user_system.say("automatically joining channel #�����...")
@@ -172,5 +174,7 @@ if __name__ == "__main__":
     user_system.say("�̶͑̊̓☐ users currently online", newline=False, prompt=True)
 
 
-    user_smaugy.say("given the chance...", delay=0.8)
-    user_smaugy.say("would you start again?")
+    user_smaugy.say("I dreamed I was an electron on an overhead power line", prompt=True)
+    user_smaugy.say("hurtling across transmission towers placed in empty plains", prompt=True)
+    user_agarthus.say("where were you going?", prompt=True)
+    user_smaugy.say("to wherever the line ended", prompt=True)

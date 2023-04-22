@@ -1,7 +1,7 @@
 from print_utils import animation_print_1, animation_print_3, animation_print_2, permutate_string
 
 from time import sleep
-from typing import Callable, List
+from typing import Callable, MutableSet
 from termcolor import colored
 from datetime import datetime
 from random import choice
@@ -120,12 +120,12 @@ class Chatter():
 
 class RandomChatter(Chatter):
 
-    def __init__(self, names: List[str], color: str, chat_style: Callable, hold_dur=8, type_speed=0.01) -> None:
-        self._random_names = names
-        super().__init__(names[0], color, chat_style, hold_dur, type_speed)
+    def __init__(self, names, color: str, chat_style: Callable, hold_dur=8, type_speed=0.01) -> None:
+        selected_name = choice(list(names))
+        names.remove(selected_name)
+        super().__init__(selected_name, color, chat_style, hold_dur, type_speed)
 
     def say(self, text: str, newline=True, prompt=False, delay=0):
-        self._name = choice(self._random_names)
         return super().say(text, newline, prompt, delay)
 
 def gateway_bootup():
@@ -162,19 +162,34 @@ def gateway_bootup():
     animation_print_1(IRC_MOTD, type_speed=0.0005, newline=True)
     animation_print_1("-"*105, newline=True, delay=5)
 
-if __name__ == "__main__":
-    gateway_bootup()
+def join_personal_channel(system: Chatter):
+    system.say(f"automatically joining channel #❂❂❂❂❂...")
+    system.say(f"joined channel #❂❂❂❂❂")
+    system.say("�̶͑̊̓☐ users currently online", newline=False, prompt=True)
 
+def join_world_channel(system: Chatter):
+    system.say(f"automatically joining channel #❦❦❦❦❦...")
+    system.say(f"joined channel #❦❦❦❦❦")
+    system.say("☐�̶͑̊̓𐠢 users currently online", newline=False, prompt=True)
+
+if __name__ == "__main__":
+    # gateway_bootup()
+
+    world_channel_names = {"hijan", "KuraManga", "queeblo154", "pal_", "vultix522", "gaoelan", "koinoyokan", 
+                           "spectralanimosity", "Zingles", "spinchev", "wislser", "orangezhao35", 
+                           "moonlover41", "blacktabby74", ""}
     user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.09)
     user_agarthus = Chatter("agarthus", "light_red", animation_print_3, 20, 0.05)
     user_system = Chatter("*", "light_cyan", animation_print_2, type_speed=0.008)
+    join_personal_channel(user_system)
 
-    user_system.say("automatically joining channel #�����...")
-    user_system.say("joined channel #�����!")
-    user_system.say("�̶͑̊̓☐ users currently online", newline=False, prompt=True)
-
-
-    user_smaugy.say("I dreamed I was an electron on an overhead power line", prompt=True)
-    user_smaugy.say("hurtling across transmission towers placed in empty plains", prompt=True)
-    user_agarthus.say("where were you going?", prompt=True)
-    user_smaugy.say("to wherever the line ended", prompt=True)
+    world_user_one = RandomChatter(world_channel_names, "light_green", animation_print_3)
+    world_user_one.say("bruh")
+    world_user_one.say("ok i pull up, hop out at the after party")
+    
+    world_user_two = RandomChatter(world_channel_names, "light_green", animation_print_3)
+    world_user_two.say("this monitor is serial, so you would need a D or whatever")
+    # user_smaugy.say("I dreamed I was an electron on an overhead power line", prompt=True)
+    # user_smaugy.say("hurtling across transmission towers placed in empty plains", prompt=True)
+    # user_agarthus.say("where were you going?", prompt=True)
+    # user_smaugy.say("to wherever the line ended", prompt=True)

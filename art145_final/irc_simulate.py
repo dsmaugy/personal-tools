@@ -97,7 +97,7 @@ class Chatter():
 
         Chatter.max_name_width = max(len(self._name), Chatter.max_name_width)
 
-    def say(self, text: str, newline=True, prompt=False, delay=0):
+    def say(self, text: str, newline=True, prompt=True, delay=0):
         current_ts = datetime.now().strftime("%H:%M:%S")
         ts_string = "["
         for c in current_ts:
@@ -120,12 +120,12 @@ class Chatter():
 
 class RandomChatter(Chatter):
 
-    def __init__(self, names, color: str, chat_style: Callable, hold_dur=8, type_speed=0.01) -> None:
+    def __init__(self, names, color: str, chat_style: Callable, hold_dur=20, type_speed=0.05) -> None:
         selected_name = choice(list(names))
         names.remove(selected_name)
         super().__init__(selected_name, color, chat_style, hold_dur, type_speed)
 
-    def say(self, text: str, newline=True, prompt=False, delay=0):
+    def say(self, text: str, newline=True, prompt=True, delay=0):
         return super().say(text, newline, prompt, delay)
 
 def gateway_bootup():
@@ -163,33 +163,82 @@ def gateway_bootup():
     animation_print_1("-"*105, newline=True, delay=5)
 
 def join_personal_channel(system: Chatter):
-    system.say(f"automatically joining channel #❂❂❂❂❂...")
-    system.say(f"joined channel #❂❂❂❂❂")
+    system.say(f"automatically joining channel #❂❂❂❂❂...", prompt=False)
+    system.say(f"joined channel #❂❂❂❂❂", prompt=False)
     system.say("�̶͑̊̓☐ users currently online", newline=False, prompt=True)
 
 def join_world_channel(system: Chatter):
-    system.say(f"automatically joining channel #❦❦❦❦❦...")
-    system.say(f"joined channel #❦❦❦❦❦")
-    system.say("☐�̶͑̊̓𐠢 users currently online", newline=False, prompt=True)
+    system.say(f"automatically joining channel #❦❦❦❦❦...", prompt=False)
+    system.say(f"joined channel #❦❦❦❦❦", prompt=False)
+    system.say(f"{permutate_string('☐�̶͑̊̓𐠢 ')} users currently online", newline=False, prompt=True)
+
+def simulate_world_chat(system: Chatter, world_channel_names):
+    num_chatters = len(world_channel_names)
+    world_chatters = [RandomChatter(world_channel_names, "light_green", animation_print_3) for i in range(num_chatters)]
+    
+    join_world_channel(system)
+    world_chatters[0].say("if you could start your life over as a child, would you?", prompt=True)
+    world_chatters[1].say("yes.", prompt=True)
+    world_chatters[1].say("I would do it to see my mom again.", prompt=True)
+    world_chatters[2].say("no. the thought of going back and not seeing my daughter any more physically hurts", prompt=True)
+    world_chatters[3].say("but then I would have to relive my childhood...", prompt=True)
+    world_chatters[3].say("so no", prompt=True)
+
+    join_world_channel(system)
+    world_chatters[4].say("after death, you wake up again in a child's body. what do you do differently?", prompt=True)
+    world_chatters[5].say("Stand up for myself and kick up a fuss")
+    world_chatters[6].say("I'll be a lot kinder to others")
+    world_chatters[7].say("It would kill me")
+    world_chatters[7].say("to have memories of my family, wife and kids")
+    world_chatters[7].say("but knowing I will never see them again...")
+    world_chatters[7].say("no thanks")
+
+    join_world_channel(system)
+    world_chatters[8].say("do you ever feel like an empty shell?")
+    world_chatters[9].say("yes")
+    world_chatters[9].say("my wife left me 13 months ago. I still pretend that she's around.")
+    world_chatters[9].say("no one knows shes gone.")
+    world_chatters[10].say("yes, drinking didn't help...")
+    world_chatters[10].say("quite the oppposite")
+    world_chatters[10].say("running saved my life though")
+
+    join_world_channel(system)
+    world_chatters[11].say("how do you carry the emptiness you feel inside?")
+    world_chatters[12].say("by having someone by my side to remind me that I'm not empty")
+    world_chatters[13].say("Emptiness is weightless. Carrying it isn't difficult")
+    world_chatters[14].say("in a jar")
+    
 
 if __name__ == "__main__":
     # gateway_bootup()
 
     world_channel_names = {"hijan", "KuraManga", "queeblo154", "pal_", "vultix522", "gaoelan", "koinoyokan", 
                            "spectralanimosity", "Zingles", "spinchev", "wislser", "orangezhao35", 
-                           "moonlover41", "blacktabby74", ""}
+                           "moonlover41", "blacktabby74", "7sages"}
     user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.09)
     user_agarthus = Chatter("agarthus", "light_red", animation_print_3, 20, 0.05)
     user_system = Chatter("*", "light_cyan", animation_print_2, type_speed=0.008)
-    join_personal_channel(user_system)
 
-    world_user_one = RandomChatter(world_channel_names, "light_green", animation_print_3)
-    world_user_one.say("bruh")
-    world_user_one.say("ok i pull up, hop out at the after party")
+    # simulate_world_chat(user_system, world_channel_names)
+    # join_personal_channel(user_system)
+
+    # world_user_one = RandomChatter(world_channel_names, "light_green", animation_print_3)
+    # world_user_one.say("bruh")
+    # world_user_one.say("ok i pull up, hop out at the after party")
     
-    world_user_two = RandomChatter(world_channel_names, "light_green", animation_print_3)
-    world_user_two.say("this monitor is serial, so you would need a D or whatever")
+    # world_user_two = RandomChatter(world_channel_names, "light_green", animation_print_3)
+    # world_user_two.say("this monitor is serial, so you would need a D or whatever")
+
+
+    # smaugy stuff
     # user_smaugy.say("I dreamed I was an electron on an overhead power line", prompt=True)
     # user_smaugy.say("hurtling across transmission towers placed in empty plains", prompt=True)
     # user_agarthus.say("where were you going?", prompt=True)
     # user_smaugy.say("to wherever the line ended", prompt=True)
+    # user_smaugy.say("when i was a kid, i really liked to scrunch up the corner of my blanket", prompt=True)
+    # user_smaugy.say("then i would hold it close to my face", prompt=True)
+    # user_smaugy.say("it felt comforting", prompt=True)
+    user_smaugy.say("i also cried a lot as a kid")
+    user_smaugy.say("my parents didnt like that")
+    user_smaugy.say("i didnt like it")
+    user_smaugy.say("because my parents didnt like it")

@@ -1,7 +1,7 @@
 from print_utils import animation_print_1, animation_print_3, animation_print_2, permutate_string
 
 from time import sleep
-from typing import Callable, MutableSet
+from typing import Callable, MutableSet, List
 from termcolor import colored
 from datetime import datetime
 from random import choice
@@ -97,7 +97,7 @@ class Chatter():
 
         Chatter.max_name_width = max(len(self._name), Chatter.max_name_width)
 
-    def say(self, text: str, newline=True, prompt=True, delay=0):
+    def _get_chat_prefix(self):
         current_ts = datetime.now().strftime("%H:%M:%S")
         ts_string = "["
         for c in current_ts:
@@ -110,13 +110,17 @@ class Chatter():
         display_name = f"<{self._name}>" if not self._bot else f"  {self._name}"
         display_attrs = ["bold", "underline"] if not self._bot else ["bold"]
 
-        print_newline = newline and not prompt
+        return ts_string + " "*(Chatter.max_name_width - len(self._name)) + colored(display_name, self._color, attrs=display_attrs) + ": "
 
-        print(ts_string + " "*(Chatter.max_name_width - len(self._name)) + colored(display_name, self._color, attrs=display_attrs) + ": ", end="")
+    def say(self, text: str, newline=True, prompt=True, delay=0, pretext=""):
+        print_newline = newline and not prompt
+        print(self._get_chat_prefix() + pretext, end="")
+
         self._animation_print(text, newline=print_newline, hold_dur=self._hold_dur, type_speed=self._type_speed, delay=delay)
 
         if prompt:
             input("")
+
 
 class RandomChatter(Chatter):
 
@@ -208,6 +212,9 @@ def simulate_world_chat(system: Chatter, world_channel_names):
     world_chatters[13].say("Emptiness is weightless. Carrying it isn't difficult")
     world_chatters[14].say("in a jar")
     
+def list_say(chatter: Chatter, phrases: List[str]):
+    for phrase in phrases:
+        chatter.say(phrase, pretext="i want ")
 
 if __name__ == "__main__":
     # gateway_bootup()
@@ -216,6 +223,8 @@ if __name__ == "__main__":
                            "spectralanimosity", "Zingles", "spinchev", "wislser", "orangezhao35", 
                            "moonlover41", "blacktabby74", "7sages"}
     user_smaugy = Chatter("smaugy", "light_red", animation_print_3, 20, 0.09)
+    user_smaugy_quick = Chatter("smaugy", "light_red", animation_print_1, 5, 0.009)
+
     user_agarthus = Chatter("agarthus", "light_red", animation_print_3, 20, 0.05)
     user_system = Chatter("*", "light_cyan", animation_print_2, type_speed=0.008)
 
@@ -238,7 +247,12 @@ if __name__ == "__main__":
     # user_smaugy.say("when i was a kid, i really liked to scrunch up the corner of my blanket", prompt=True)
     # user_smaugy.say("then i would hold it close to my face", prompt=True)
     # user_smaugy.say("it felt comforting", prompt=True)
-    user_smaugy.say("i also cried a lot as a kid")
-    user_smaugy.say("my parents didnt like that")
-    user_smaugy.say("i didnt like it")
-    user_smaugy.say("because my parents didnt like it")
+    # user_smaugy.say("i also cried a lot as a kid")
+    # user_smaugy.say("my parents didnt like that")
+    # user_smaugy.say("i didnt like it")
+    # user_smaugy.say("because my parents didnt like it")
+    
+    want_list = ["to paint my nails", "to dye my hair", "to eat a cheeseburger with pickles", "to eat a cheeseburger with no pickles", "to be taller", 
+                 "to love my family", "to not be annoying", "to reach grandmaster", "to reach diamond", "to fix my resume", "to make my friends laugh", "to play piano"]
+    
+    list_say(user_smaugy_quick, want_list)

@@ -212,9 +212,9 @@ def simulate_world_chat(system: Chatter, world_channel_names):
     world_chatters[13].say("Emptiness is weightless. Carrying it isn't difficult")
     world_chatters[14].say("in a jar")
     
-def list_say(chatter: Chatter, phrases: List[str]):
+def list_say(chatter: Chatter, phrases: List[str], pretext: str = ""):
     for phrase in phrases:
-        chatter.say(phrase, pretext="i want ")
+        chatter.say(phrase, pretext=pretext)
 
 if __name__ == "__main__":
     # gateway_bootup()
@@ -252,7 +252,21 @@ if __name__ == "__main__":
     # user_smaugy.say("i didnt like it")
     # user_smaugy.say("because my parents didnt like it")
     
-    want_list = ["to paint my nails", "to dye my hair", "to eat a cheeseburger with pickles", "to eat a cheeseburger with no pickles", "to be taller", 
+    want_list = ["to paint my nails", "to dye my hair", "to eat a cheeseburger with pickles", "to eat a cheeseburger with no pickles", "to be taller", "to not disappoint",
                  "to love my family", "to not be annoying", "to reach grandmaster", "to reach diamond", "to fix my resume", "to make my friends laugh", "to play piano"]
     
-    list_say(user_smaugy_quick, want_list)
+    wave_list = ["transverse waves", "radio waves", "longitudinal waves", "hand waves", "sound waves", 
+                 "zombie waves", "ocean waves", "goodbye waves", "hello waves"]
+    
+    like_list = ["turning on my computer", "staying connected", "when it's cold and sunny", "walking to the beat", "tapping to the beat", "talking online", 
+                 "my stuffed animals", "the airport", "using the subway", "winning as a team", "6th period physics lab", "driving my friends", "getting driven by friends", 
+                 "windows vista", "watching people eat", "reading youtube comments"]
+    
+    begin_list = ["on a random seed", "surrounded by love", "surrounded by books", "in a random seed", "to explore (on a random seed)", "a workout routine", "to think about my future", 
+                  "a better sleep schedule", "eating more", "conscious listening"]
+
+    
+    list_say(user_smaugy_quick, want_list, "i want to ")
+    list_say(user_smaugy_quick, wave_list)
+    list_say(user_smaugy_quick, like_list, "i like ")
+    list_say(user_smaugy_quick, begin_list, "i will begin ")

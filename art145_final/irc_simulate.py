@@ -266,7 +266,24 @@ if __name__ == "__main__":
                   "a better sleep schedule", "eating more", "conscious listening"]
 
     
-    list_say(user_smaugy_quick, want_list, "i want to ")
-    list_say(user_smaugy_quick, wave_list)
-    list_say(user_smaugy_quick, like_list, "i like ")
-    list_say(user_smaugy_quick, begin_list, "i will begin ")
+    # list_say(user_smaugy_quick, want_list, "i want ")
+    # list_say(user_smaugy_quick, wave_list)
+    # list_say(user_smaugy_quick, like_list, "i like ")
+    # list_say(user_smaugy_quick, begin_list, "i will begin ")
+
+    user_smaugy.say("", False, True)
+
+    # join_personal_channel(user_system)
+    # user_smaugy_quick.say("A system of cells interlinked within", prompt=False)
+    # user_smaugy_quick.say("Cells interlinked within cells interlinked", prompt=False)
+    # user_smaugy_quick.say("Within one stem. And dreadfully distinct", prompt=False)
+    # user_smaugy_quick.say("Against the dark, a tall white fountain played", prompt=False)
+    # user_smaugy_quick.say("...")
+    # user_smaugy.say("am I special?")
+    # user_agarthus.say("do you want to be special?")
+
+    # TODO: make a mode where timings are all exactly the same regardless of string length
+    # TODO: re-record affirmations with more prompts and with randomization
+
+
+    

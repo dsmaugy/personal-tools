@@ -33,6 +33,26 @@ def animation_print_1(text: str, hold_dur: int = 5, type_speed: float = 0.005, n
 
     sleep(delay) 
 
+def animation_print_1_uniform(text: str, hold_dur: int = 5, type_speed: float = 3, newline: bool = False, delay: float = 0.0):
+    delay_length = type_speed / (len(text)*hold_dur)
+
+    for c in text:
+        if c != "\n":
+            for _ in range(hold_dur):            
+                sys.stdout.write(chr(randrange(33, 127)))
+                sys.stdout.flush()
+                sleep(delay_length)
+                sys.stdout.write("\b")
+                sys.stdout.flush()
+
+        print(f"{c}", end='')
+        
+    sys.stdout.flush()
+    sleep(delay) 
+    if newline:
+        print()
+
+
 def animation_print_2(text: str, hold_dur: int = 10, type_speed: float = 0.05,  newline: bool = False, delay: float = 0.0):
     for i, c in enumerate(text):
         for j in range(i):

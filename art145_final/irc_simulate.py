@@ -1,4 +1,4 @@
-from print_utils import animation_print_1, animation_print_3, animation_print_2, permutate_string
+from print_utils import animation_print_1, animation_print_3, animation_print_2, permutate_string, animation_print_1_uniform
 
 from time import sleep
 from typing import Callable, MutableSet, List
@@ -271,7 +271,7 @@ if __name__ == "__main__":
     # list_say(user_smaugy_quick, like_list, "i like ")
     # list_say(user_smaugy_quick, begin_list, "i will begin ")
 
-    user_smaugy.say("", False, True)
+    # user_smaugy.say("", False, True)
 
     # join_personal_channel(user_system)
     # user_smaugy_quick.say("A system of cells interlinked within", prompt=False)
@@ -284,6 +284,23 @@ if __name__ == "__main__":
 
     # TODO: make a mode where timings are all exactly the same regardless of string length
     # TODO: re-record affirmations with more prompts and with randomization
+
+    affirmations_set = set()
+    user_smaugy_uniform = Chatter("smaugy", "light_red", animation_print_1_uniform, hold_dur=25, type_speed=1.0)
+
+    for want in want_list:
+        affirmations_set.add(("i want ", want))
+    for like in like_list:
+        affirmations_set.add(("i like ", like))
+    for begin in begin_list:
+        affirmations_set.add(("i will begin ", begin))
+
+    while len(affirmations_set) > 0:
+        rand = choice(list(affirmations_set))
+        affirmations_set.remove(rand)
+
+        user_smaugy_uniform.say(text=rand[1], prompt=False, delay=0.3, pretext=rand[0])
+
 
 
     
